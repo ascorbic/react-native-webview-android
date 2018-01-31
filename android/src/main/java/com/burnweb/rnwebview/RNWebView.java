@@ -13,6 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.PermissionRequest;
 
 import com.facebook.react.common.SystemClock;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -57,6 +58,12 @@ class RNWebView extends WebView implements LifecycleEventListener {
     }
 
     protected class CustomWebChromeClient extends WebChromeClient {
+
+        @Override
+        public void onPermissionRequest(final PermissionRequest request) {
+            request.grant(request.getResources());
+        }
+
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
             getModule().showAlert(url, message, result);
